@@ -1,0 +1,28 @@
+FROM stlouisn/ubuntu:rolling
+
+RUN \
+
+    export DEBIAN_FRONTEND=noninteractive && \
+
+    # Update apt-cache
+    apt-get update && \
+
+    # Install Python
+    apt-get install -y --no-install-recommends \
+        python && \
+
+    # Install PIP
+    curl https://bootstrap.pypa.io/get-pip.py | python - --no-cache && \
+
+    # Clean apt-cache
+    apt-get autoremove -y --purge && \
+    apt-get clean -y && \
+    apt-get autoclean -y && \
+
+    # Cleanup temporary folders
+    rm -rf \
+        /root/.cache \
+        /root/.wget-hsts \
+        /tmp/* \
+        /var/lib/apt/lists/* \
+        /var/log/*
