@@ -14,6 +14,9 @@ RUN \
     # Install PIP
     curl https://bootstrap.pypa.io/get-pip.py | python - --no-cache && \
 
+    # Clean Python
+    find /usr/lib/python* -name '*test*' -exec rm {}\; && \
+
     # Clean apt-cache
     apt-get autoremove -y --purge && \
     apt-get clean -y && \
