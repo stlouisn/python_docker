@@ -19,12 +19,6 @@ Python Ubuntu Base Image.
 
 ### Tags
 
-[![Version](https://images.microbadger.com/badges/version/stlouisn/python:stable.svg)][microbadger_url]
-[![Layers](https://images.microbadger.com/badges/image/stlouisn/python:stable.svg)][microbadger_url]
-
-[![Version](https://images.microbadger.com/badges/version/stlouisn/python:latest.svg)][microbadger_url]
-[![Layers](https://images.microbadger.com/badges/image/stlouisn/python:latest.svg)][microbadger_url]
-
 [![Version](https://images.microbadger.com/badges/version/stlouisn/python:2.svg)][microbadger_url]
 [![Layers](https://images.microbadger.com/badges/image/stlouisn/python:2.svg)][microbadger_url]
 
