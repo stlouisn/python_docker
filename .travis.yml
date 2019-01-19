@@ -41,10 +41,9 @@ before_script:
 
 script:
   - >
-    docker build
+    docker build --pull
     --tag ${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG}
-    --pull
-    --file python${DOCKER_TAG}/Dockerfile
+    python${DOCKER_TAG}/Dockerfile
 
 after_success:
   - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
