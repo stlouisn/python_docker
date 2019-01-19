@@ -9,13 +9,10 @@ RUN \
 
     # Install Python
     apt-get install -y --no-install-recommends \
-        python && \
+        python2 && \
 
     # Install PIP
-    curl https://bootstrap.pypa.io/get-pip.py | python - --no-cache && \
-
-    # Clean Python
-    find /usr/lib/python* -name '*test*' -exec rm {}\; && \
+    curl https://bootstrap.pypa.io/get-pip.py | python2 - --no-cache-dir && \
 
     # Clean apt-cache
     apt-get autoremove -y --purge && \
