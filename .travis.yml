@@ -49,7 +49,25 @@ after_success:
   - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
   - docker push ${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG}
 
-  # Trigger external builds
+  # Trigger home-assistant_docker build
+  - >
+    curl -X POST
+    -H "Content-Type: application/json"
+    -H "Travis-API-Version: 3"
+    -H "Accept: application/json"
+    -H "Authorization: token ${TRAVIS_API_TOKEN}"
+    -d '{"request": {"message": "Push from stlouisn/ubuntu:rolling", "branch": "master"}}'
+    'https://api.travis-ci.org/repo/stlouisn%2Fhome-assistant_docker/requests'
+
+  # Trigger beets_docker build
+  - >
+    curl -X POST
+    -H "Content-Type: application/json"
+    -H "Travis-API-Version: 3"
+    -H "Accept: application/json"
+    -H "Authorization: token ${TRAVIS_API_TOKEN}"
+    -d '{"request": {"message": "Push from stlouisn/ubuntu:rolling", "branch": "master"}}'
+    'https://api.travis-ci.org/repo/stlouisn%2Fbeets_docker/requests'
 
 notifications:
   email:
