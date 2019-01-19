@@ -37,7 +37,7 @@ before_install:
 install:
 
 before_script:
-  - sed -i -e "/^$/d" -e "s/^[ \t]*//" -e "/^#/d" Dockerfile
+  - sed -i -e "/^$/d" -e "s/^[ \t]*//" -e "/^#/d" python${DOCKER_TAG}/Dockerfile
 
 script:
   - >
