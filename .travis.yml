@@ -45,6 +45,7 @@ before_script:
 script:
   - >
     docker build
+    --file Dockerfile.${TAG}
     --label org.label-schema.build-date="$BUILD_DATE"
     --label org.label-schema.build-number="$BUILD_NUMBER"
     --label org.label-schema.description="$DOCKER_DESCRIPTION"
