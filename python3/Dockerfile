@@ -13,10 +13,7 @@ RUN \
         python3-distutils && \
         
     # Install PIP
-    curl https://bootstrap.pypa.io/get-pip.py | python3 - --no-cache-dir && \
-
-    # Clean Python
-    find /usr/lib/python* -name '*test*' -exec rm {}\; && \
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python3 - --no-cache-dir && \
 
     # Clean apt-cache
     apt-get autoremove -y --purge && \
