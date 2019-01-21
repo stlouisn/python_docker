@@ -43,7 +43,7 @@ after_success:
     -H "Travis-API-Version: 3"
     -H "Accept: application/json"
     -H "Authorization: token ${TRAVIS_API_TOKEN}"
-    -d '{"request": {"message": "Push from stlouisn/ubuntu:rolling", "branch": "master"}}'
+    -d '{"request": {"message": "Push from stlouisn/python", "branch": "master"}}'
     'https://api.travis-ci.org/repo/stlouisn%2Fbeets_docker/requests'
 
   # Trigger home-assistant_docker build
@@ -53,7 +53,7 @@ after_success:
     -H "Travis-API-Version: 3"
     -H "Accept: application/json"
     -H "Authorization: token ${TRAVIS_API_TOKEN}"
-    -d '{"request": {"message": "Push from stlouisn/ubuntu:rolling", "branch": "master"}}'
+    -d '{"request": {"message": "Push from stlouisn/python", "branch": "master"}}'
     'https://api.travis-ci.org/repo/stlouisn%2Fhome-assistant_docker/requests'
 
 notifications:
