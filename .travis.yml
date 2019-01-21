@@ -3,36 +3,46 @@ dist: trusty
 group: travis_latest
 sudo: required
 
+addons:
+  apt:
+    packages:
+      - docker-ce
+
 branches:
   only:
     - master
 
+env:
+  global:
+    - DOCKER_MAINTAINER="stlouisn"
+    - DOCKER_NAME="python"
+  matrix:
+    - DOCKER_TAG="2"
+    - DOCKER_TAG="3"
+
+before_install:
+  - docker version
+  - sudo /sbin/sysctl -w net.ipv4.conf.all.forwarding=1
+
+install:
+
+before_script:
+  - sed -i -e "/^$/d" -e "s/^[ \t]*//" -e "/^#/d" python${DOCKER_TAG}/Dockerfile
+
+script:
+  - docker build --tag ${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG} --pull python${DOCKER_TAG}/.
+
+after_success:
+  - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
+  - docker push ${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG}
+
 jobs:
   include:
-    - stage: build
-      addons:
-        apt:
-          packages:
-            - docker-ce
-      env:
-        global:
-          - DOCKER_MAINTAINER="stlouisn"
-          - DOCKER_NAME="python"
-        matrix:
-          - DOCKER_TAG="2"
-          - DOCKER_TAG="3"
-      before_install:
-        - docker version
-        - sudo /sbin/sysctl -w net.ipv4.conf.all.forwarding=1
-      install: skip
-      before_script:
-        - sed -i -e "/^$/d" -e "s/^[ \t]*//" -e "/^#/d" python${DOCKER_TAG}/Dockerfile
-      script:
-        - docker build --tag ${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG} --pull python${DOCKER_TAG}/.
-      after_success:
-        - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-        - docker push ${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG}
     - stage: trigger
+      env: DOCKER_TAG=none
+      before_install: skip
+      install: skip
+      before_script: skip
       script:
       # Trigger beets_docker build
       - >
@@ -52,6 +62,7 @@ jobs:
         -H "Authorization: token ${TRAVIS_API_TOKEN}"
         -d '{"request": {"message": "Push from stlouisn/python", "branch": "master"}}'
         'https://api.travis-ci.org/repo/stlouisn%2Fhome-assistant_docker/requests'
+      after_success: skip
 
 notifications:
   email:
