@@ -12,6 +12,8 @@ branches:
   only:
     - master
 
+name: build
+
 env:
   global:
     - DOCKER_MAINTAINER="stlouisn"
