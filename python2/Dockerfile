@@ -12,7 +12,7 @@ RUN \
         python2 && \
 
     # Install PIP
-    curl -sS https://bootstrap.pypa.io/get-pip.py | python2 - && \
+    curl -sS https://bootstrap.pypa.io/get-pip.py | python2 - --no-cache-dir && \
 
     # Clean apt-cache
     apt-get autoremove -y --purge && \
