@@ -16,7 +16,7 @@
 [![Docker Pulls][docker_pulls_logo]][docker_hub_url]
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Python Ubuntu Base Image.
+Python Base Image.
 
 ### Tags
 
