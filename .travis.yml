@@ -17,20 +17,20 @@ stage: build
 
 env:
   global:
-    - BUILD_DATE="`date -u +%Y-%m-%dT%H:%M:%SZ`"
-    - BUILD_NUMBER="$TRAVIS_BUILD_NUMBER"
+    - BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+    - BUILD_NUMBER="${TRAVIS_BUILD_NUMBER}"
     - DOCKER_DESCRIPTION="python base image"
     - DOCKER_MAINTAINER="stlouisn"
     - DOCKER_NAME="python"
     - DOCKER_URL="https://www.python.org/"
-    - SCHEMA_VERSION="1.0"	
-    - VCS_REF="`git rev-parse --short HEAD`"	
-    - VCS_URL="`git remote get-url origin | head -c-5`"
+    - SCHEMA_VERSION="1.0"
+    - VCS_REF="$(git rev-parse --short HEAD)"
+    - VCS_URL="$(git remote get-url origin | head -c-5)"
   matrix:
     - DOCKER_TAG="2"
-      DOCKER_VERSION=$(curl -sL https://packages.ubuntu.com/`curl -sL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling`/python2|grep Package:|awk -F '(' {'print $2'}|awk -F '-' {'print $1'})
+      DOCKER_VERSION="$(curl -sL https://packages.ubuntu.com/`curl -sL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling`/python2|grep Package:|awk -F '(' {'print $2'}|awk -F '-' {'print $1'})"
     - DOCKER_TAG="3"
-      DOCKER_VERSION=$(curl -sL https://packages.ubuntu.com/`curl -sL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling`/python3|grep Package:|awk -F '(' {'print $2'}|awk -F '-' {'print $1'})
+      DOCKER_VERSION="$(curl -sL https://packages.ubuntu.com/`curl -sL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling`/python3|grep Package:|awk -F '(' {'print $2'}|awk -F '-' {'print $1'})"
 
 before_install:
   - docker version
@@ -51,7 +51,7 @@ after_success:
 jobs:
   include:
     - stage: trigger
-      env: DOCKER_TAG=none
+      env: DOCKER_TAG="none"
       before_install: skip
       install: skip
       before_script: skip
