@@ -1,5 +1,5 @@
 language: bash
-dist: trusty
+dist: xenial
 group: travis_latest
 sudo: required
 
@@ -14,8 +14,6 @@ addons:
     packages:
       - docker-ce
 
-stage: build
-
 env:
   global:
     - BUILD_DATE="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
@@ -29,53 +27,31 @@ env:
     - VCS_URL="$(git remote get-url origin | head -c-5)"
   matrix:
     - DOCKER_TAG="2"
-      DOCKER_VERSION="$(curl -sL https://packages.ubuntu.com/`curl -sL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling`/python2 | grep 'Package:' | awk -F '(' {'print $2'} | cut -d + -f 1 | cut -d - -f 1)"
+      UBUNTU_CODENAME="$(curl -ksSL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling)"
+      DOCKER_VERSION="$(curl -ksSL https://packages.ubuntu.com/${UBUNTU_CODENAME}/python2 | grep 'Package:' | awk -F '(' {'print $2'} | cut -d + -f 1 | cut -d - -f 1)"
     - DOCKER_TAG="3"
-      DOCKER_VERSION="$(curl -sL https://packages.ubuntu.com/`curl -sL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling`/python3 | grep 'Package:' | awk -F '(' {'print $2'} | cut -d + -f 1 | cut -d - -f 1)"
+      UBUNTU_CODENAME="$(curl -ksSL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling)"
+      DOCKER_VERSION="$(curl -ksSL https://packages.ubuntu.com/${UBUNTU_CODENAME}/python3 | grep 'Package:' | awk -F '(' {'print $2'} | cut -d + -f 1 | cut -d - -f 1)"
 
 before_install:
-  - docker version
   - sudo /sbin/sysctl -w net.ipv4.conf.all.forwarding=1
+  - docker version
 
 install:
+  - sudo docker run --privileged linuxkit/binfmt:v0.6
+  - sudo docker run --privileged -d -p 1234:1234 --name buildkit moby/buildkit:latest --addr tcp://0.0.0.0:1234 --oci-worker-platform linux/arm --oci-worker-platform linux/armhf --oci-worker-platform linux/arm64 --oci-worker-platform linux/amd64
+  - sudo docker cp buildkit:/usr/bin/buildctl /usr/bin/
+  - export BUILDKIT_HOST=tcp://0.0.0.0:1234
 
 before_script:
-  - sed -i -e "/^$/d" -e "s/^[ \t]*//" -e "/^#/d" python${DOCKER_TAG}/Dockerfile
+  - sed -i -e '/^$/d' -e 's/^[ \t]*//' -e '/^#/d' Dockerfile*
 
 script:
-  - docker build --tag ${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG} --pull python${DOCKER_TAG}/.
+  - sudo bash ./travis/build.sh
+  - sudo bash ./travis/deploy.sh
 
 after_success:
-  - echo ${DOCKER_PASSWORD} | docker login --username ${DOCKER_USERNAME} --password-stdin
-  - docker push ${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG}
-
-jobs:
-  include:
-    - stage: trigger
-      env: DOCKER_TAG="none"
-      before_install: skip
-      install: skip
-      before_script: skip
-      script:
-      # Trigger beets_docker build
-      - >
-        curl -X POST
-        -H "Content-Type: application/json"
-        -H "Travis-API-Version: 3"
-        -H "Accept: application/json"
-        -H "Authorization: token ${TRAVIS_API_TOKEN}"
-        -d '{"request": {"message": "Push from stlouisn/python", "branch": "master"}}'
-        'https://api.travis-ci.org/repo/stlouisn%2Fbeets_docker/requests'
-      # Trigger home-assistant_docker build
-      - >
-        curl -X POST
-        -H "Content-Type: application/json"
-        -H "Travis-API-Version: 3"
-        -H "Accept: application/json"
-        -H "Authorization: token ${TRAVIS_API_TOKEN}"
-        -d '{"request": {"message": "Push from stlouisn/python", "branch": "master"}}'
-        'https://api.travis-ci.org/repo/stlouisn%2Fhome-assistant_docker/requests'
-      after_success: skip
+  - sudo bash ./travis/trigger.sh
 
 notifications:
   email:
