@@ -18,6 +18,6 @@ do
 		--opt filename=./Dockerfile.${DOCKER_NAME}-${DOCKER_TAG}-$arch \
 		--local dockerfile=. \
 		--local context=. \
-		--output type=image,name=docker.io/${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG}-$arch
+		--output type=image,name=docker.io/${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG}-$arch,push=true
 
 done
