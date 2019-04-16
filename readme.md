@@ -9,7 +9,7 @@
 [issues_url]: https://github.com/stlouisn/python_docker/issues
 [slack_url]: https://stlouisn.slack.com/messages/CBRNYGY3V
 
-## Python Docker
+## Python Base Image
 
 [![Build Status][travis_logo]][travis_url]
 [![Docker Stars][docker_stars_logo]][docker_hub_url]
@@ -19,9 +19,6 @@
 Python Base Image.
 
 ### Tags
-
-[![Version](https://images.microbadger.com/badges/version/stlouisn/python:2.svg)][microbadger_url]
-[![Layers](https://images.microbadger.com/badges/image/stlouisn/python:2.svg)][microbadger_url]
 
 [![Version](https://images.microbadger.com/badges/version/stlouisn/python:3.svg)][microbadger_url]
 [![Layers](https://images.microbadger.com/badges/image/stlouisn/python:3.svg)][microbadger_url]
