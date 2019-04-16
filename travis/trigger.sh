@@ -2,15 +2,7 @@
 
 set -euo pipefail
 
-# Builds to trigger for python 2
-if [[ ${DOCKER_TAG} == "2" ]] then
-  exit 0
-fi
-
-# Builds to trigger for python 3
-if [[ ${DOCKER_TAG} == "3" ]] then
-  builds="beets_docker home-assistant_docker"
-fi
+builds="beets_docker home-assistant_docker"
 
 body='{
 "request": {
