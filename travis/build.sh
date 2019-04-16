@@ -3,8 +3,7 @@
 set -euo pipefail
 
 # Architectures to build
-#architectures="arm arm64 amd64"
-architectures="amd64"
+architectures="arm arm64 amd64"
 
 for arch in $architectures
 do
