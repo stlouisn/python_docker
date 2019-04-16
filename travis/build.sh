@@ -15,7 +15,7 @@ do
 	buildctl build \
 		--frontend dockerfile.v0 \
 		--opt platform=linux/$arch \
-		--opt filename=./Dockerfile.${DOCKER_NAME}-${DOCKER_TAG}-$arch \
+		--opt filename=docker/Dockerfile.${DOCKER_NAME}-${DOCKER_TAG}-$arch \
 		--local dockerfile=. \
 		--local context=. \
 		--output type=image,name=docker.io/${DOCKER_USERNAME}/${DOCKER_NAME}:${DOCKER_TAG}-$arch,push=true
