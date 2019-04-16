@@ -1,5 +1,4 @@
 FROM stlouisn/ubuntu:rolling-arm
-
 RUN \
 
     export DEBIAN_FRONTEND=noninteractive && \
