@@ -28,10 +28,10 @@ env:
   matrix:
     - DOCKER_TAG="2"
       UBUNTU_CODENAME="$(curl -ksSL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling)"
-      DOCKER_VERSION="$(curl -ksSL https://packages.ubuntu.com/${UBUNTU_CODENAME}/python2 | grep 'Package:' | awk -F '(' {'print $2'} | cut -d + -f 1 | cut -d - -f 1)"
+      DOCKER_VERSION="$(curl -ksSL https://packages.ubuntu.com/cosmic/python2 | grep h1 | awk -F ' ' {'print $3'} | cut -c 2- | rev | cut -c 2- | rev)"
     - DOCKER_TAG="3"
       UBUNTU_CODENAME="$(curl -ksSL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling)"
-      DOCKER_VERSION="$(curl -ksSL https://packages.ubuntu.com/${UBUNTU_CODENAME}/python3 | grep 'Package:' | awk -F '(' {'print $2'} | cut -d + -f 1 | cut -d - -f 1)"
+      DOCKER_VERSION="$(curl -ksSL https://packages.ubuntu.com/cosmic/python3 | grep h1 | awk -F ' ' {'print $3'} | cut -c 2- | rev | cut -c 2- | rev)"
 
 before_install:
   - sudo /sbin/sysctl -w net.ipv4.conf.all.forwarding=1
