@@ -26,9 +26,6 @@ env:
     - VCS_REF="$(git rev-parse --short HEAD)"
     - VCS_URL="$(git remote get-url origin | head -c-5)"
   matrix:
-    - DOCKER_TAG="2"
-      UBUNTU_CODENAME="$(curl -ksSL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling)"
-      DOCKER_VERSION="$(curl -ksSL https://packages.ubuntu.com/cosmic/python2 | grep h1 | awk -F ' ' {'print $3'} | cut -c 2- | rev | cut -c 2- | rev)"
     - DOCKER_TAG="3"
       UBUNTU_CODENAME="$(curl -ksSL https://raw.githubusercontent.com/tianon/docker-brew-ubuntu-core/master/rolling)"
       DOCKER_VERSION="$(curl -ksSL https://packages.ubuntu.com/cosmic/python3 | grep h1 | awk -F ' ' {'print $3'} | cut -c 2- | rev | cut -c 2- | rev)"
