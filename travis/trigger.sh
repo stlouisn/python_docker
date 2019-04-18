@@ -6,7 +6,7 @@ builds="beets_docker home-assistant_docker"
 
 body='{
 "request": {
-"message": "Push from stlouisn/ubuntu",
+"message": "Push from stlouisn/python",
 "branch": "master"
 }}'
 
