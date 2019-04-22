@@ -2,8 +2,10 @@
 
 set -euo pipefail
 
+# Builds to trigger
 builds="beets_docker home-assistant_docker"
 
+# Commit Message
 body='{
 "request": {
 "message": "Push from stlouisn/python",
