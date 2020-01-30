@@ -3,7 +3,7 @@
 set -euo pipefail
 
 # Builds to trigger
-builds="beets_docker home-assistant_docker"
+builds="beets_docker"
 
 # Commit Message
 body='{
