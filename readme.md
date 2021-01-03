@@ -1,5 +1,5 @@
-[travis_logo]: https://travis-ci.org/stlouisn/python_docker.svg?branch=master
-[travis_url]: https://travis-ci.org/stlouisn/python_docker
+[travis_logo]: https://travis-ci.com/stlouisn/python_docker.svg?branch=master
+[travis_url]: https://travis-ci.com/stlouisn/python_docker
 [docker_stars_logo]: https://img.shields.io/docker/stars/stlouisn/python.svg
 [docker_pulls_logo]: https://img.shields.io/docker/pulls/stlouisn/python.svg
 [docker_hub_url]: https://hub.docker.com/r/stlouisn/python
